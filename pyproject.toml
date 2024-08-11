@@ -12,6 +12,8 @@ djangorestframework = "3.14"
 python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
 djangorestframework-simplejwt = "^5.3.1"
+pytils = "^0.4.1"
+django-filter = "^24.3"
 
 
 [build-system]
