@@ -1,0 +1,52 @@
+[
+  {
+    "model": "authors.author",
+    "pk": 1,
+    "fields": {
+      "name": "Лев",
+      "surname": "Толстой",
+      "text": null,
+      "slug": "lev-tolstoj"
+    }
+  },
+  {
+    "model": "authors.author",
+    "pk": 2,
+    "fields": {
+      "name": "Александр",
+      "surname": "Пушкин",
+      "text": null,
+      "slug": "aleksandr-pushkin"
+    }
+  },
+  {
+    "model": "authors.author",
+    "pk": 3,
+    "fields": {
+      "name": "Aleksandr",
+      "surname": "Duma",
+      "text": null,
+      "slug": "aleksandr-duma"
+    }
+  },
+  {
+    "model": "authors.author",
+    "pk": 4,
+    "fields": {
+      "name": "Николай",
+      "surname": "Гоголь",
+      "text": null,
+      "slug": "nikolaj-gogol"
+    }
+  },
+  {
+    "model": "authors.author",
+    "pk": 5,
+    "fields": {
+      "name": "Rodjer",
+      "surname": "Jeliazny",
+      "text": null,
+      "slug": "rodjer-jeliazny"
+    }
+  }
+]

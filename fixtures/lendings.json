@@ -1,0 +1,69 @@
+[
+  {
+    "model": "lendings.lending",
+    "pk": 1,
+    "fields": {
+      "user": 7,
+      "lending_date": "2024-08-11T00:00:00Z",
+      "return_date": "2024-08-18T00:00:00Z",
+      "active": false,
+      "book": [
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "model": "lendings.lending",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "lending_date": "2024-08-11T00:00:00Z",
+      "return_date": "2024-08-18T00:00:00Z",
+      "active": true,
+      "book": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "lendings.lending",
+    "pk": 3,
+    "fields": {
+      "user": 5,
+      "lending_date": "2024-08-11T00:00:00Z",
+      "return_date": "2024-08-18T00:00:00Z",
+      "active": false,
+      "book": [
+        9,
+        6
+      ]
+    }
+  },
+  {
+    "model": "lendings.lending",
+    "pk": 4,
+    "fields": {
+      "user": 9,
+      "lending_date": "2024-08-11T17:49:19.515Z",
+      "return_date": "2024-08-18T17:49:19.515Z",
+      "active": true,
+      "book": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "lendings.lending",
+    "pk": 5,
+    "fields": {
+      "user": 9,
+      "lending_date": "2024-08-12T14:35:45.352Z",
+      "return_date": "2024-08-19T14:35:45.352Z",
+      "active": true,
+      "book": [
+        7
+      ]
+    }
+  }
+]

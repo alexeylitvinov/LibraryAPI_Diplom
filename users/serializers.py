@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from lendings.models import Lending
+from lendings.serializers import LendingUserSerializer
 from users.models import User
 
 
@@ -16,9 +18,16 @@ class UserViewSerializer(serializers.ModelSerializer):
 
 
 class UserLibrarianViewSerializer(serializers.ModelSerializer):
+    lendings = serializers.SerializerMethodField()
+
+    def get_lendings(self, obj):
+        lendings = Lending.objects.filter(user=obj, active=True)
+        serializer = LendingUserSerializer(lendings, many=True)
+        return serializer.data
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'library_card', 'phone_number']
+        fields = ['first_name', 'last_name', 'library_card', 'phone_number', 'lendings']
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):

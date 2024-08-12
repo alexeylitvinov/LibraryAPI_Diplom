@@ -24,7 +24,6 @@ class AuthorCreateAPIView(CreateAPIView):
 class AuthorListAPIView(ListAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    # permission_classes = (IsLibrarian,)
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('slug',)
 

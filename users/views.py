@@ -1,12 +1,9 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-# from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
-# from rest_framework.filters import SearchFilter
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-# from rest_framework.views import APIView
 
 from users.models import User
 from users.permissions import IsLibrarian
@@ -89,15 +86,3 @@ class UserPasswordUpdateAPIView(UpdateAPIView):
                 return Response({'message': 'Заполните поле пароля'}, status=400)
         else:
             return Response({'message': 'Заполните поле пароля'}, status=400)
-
-
-# class GetUserByDocumentView(APIView):
-#     permission_classes = (IsLibrarian,)
-#
-#     def get(self, request, library_card):
-#         try:
-#             user = User.objects.get(library_card=library_card)
-#             serializer = UserLibrarianViewSerializer(user)
-#             return Response(serializer.data)
-#         except User.DoesNotExist:
-#             return Response({"message": "Пользователь не найден"}, status=status.HTTP_404_NOT_FOUND)

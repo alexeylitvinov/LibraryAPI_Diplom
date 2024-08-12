@@ -1,0 +1,122 @@
+[
+  {
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+      "title": "Три мушкетера",
+      "author": 3,
+      "text": "ddgdfg dffgdfg dfgdfg dfgdg",
+      "slug": "tri-mushketera-1",
+      "year": 1844,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+      "title": "Три мушкетера",
+      "author": 3,
+      "text": "ddgdfg dffgdfg dfgdfg dfgdg",
+      "slug": "tri-mushketera-2",
+      "year": 1844,
+      "on_hand": true
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+      "title": "Три мушкетера",
+      "author": 3,
+      "text": "ddgdfg dffgdfg dfgdfg dfgdg",
+      "slug": "tri-mushketera-3",
+      "year": 1844,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 4,
+    "fields": {
+      "title": "Сказки",
+      "author": 2,
+      "text": "у лукоморья дуб зеленый",
+      "slug": "skazki-4",
+      "year": 1834,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 5,
+    "fields": {
+      "title": "Война и мир",
+      "author": 1,
+      "text": "раташа ростова",
+      "slug": "vojna-i-mir-5",
+      "year": 1894,
+      "on_hand": true
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 6,
+    "fields": {
+      "title": "Война и мир",
+      "author": 1,
+      "text": "раташа ростова",
+      "slug": "vojna-i-mir-6",
+      "year": 1894,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 7,
+    "fields": {
+      "title": "Мертвые души",
+      "author": 4,
+      "text": "Не помню героев помоему Чичиков",
+      "slug": "mertvyie-dushi-7",
+      "year": 1904,
+      "on_hand": true
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 8,
+    "fields": {
+      "title": "Hroniki Ambera",
+      "author": 5,
+      "text": "9 tomov",
+      "slug": "hroniki-ambera-8",
+      "year": 1964,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 9,
+    "fields": {
+      "title": "Hroniki Ambera",
+      "author": 5,
+      "text": "9 tomov",
+      "slug": "hroniki-ambera-9",
+      "year": 1964,
+      "on_hand": false
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 10,
+    "fields": {
+      "title": "Sozdanie Sveta",
+      "author": 5,
+      "text": "Fantastika",
+      "slug": "sozdanie-sveta-10",
+      "year": 1969,
+      "on_hand": false
+    }
+  }
+]
