@@ -13,23 +13,27 @@ from users.permissions import IsLibrarian
 
 
 class BookCreateAPIView(CreateAPIView):
+    """ Создание книги """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsLibrarian,)
 
     def perform_create(self, serializer):
+        """ Создание slug книги """
         book = serializer.save()
         book.slug = slugify(book.title + '-' + str(book.pk))
         book.save()
 
 
 class BookListAPIView(ListAPIView):
+    """ Просмотр книг с фильтрацией """
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['slug', 'title', 'genre', 'author', 'year', 'on_hand']
 
     def get_queryset(self):
+        """ Для библиотекаря выбираются все книги, для пользователя - только книги у которых on_hand = False """
         if self.request.user.groups.filter(name='librarian').exists():
             return Book.objects.all()
         else:
@@ -37,10 +41,12 @@ class BookListAPIView(ListAPIView):
 
 
 class BookRetrieveAPIView(RetrieveAPIView):
+    """ Просмотр конкретной книги """
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
 
     def get_queryset(self):
+        """ Для библиотекаря выбираются все книги, для пользователя - только книги у которых on_hand = False """
         if self.request.user.groups.filter(name='librarian').exists():
             return Book.objects.all()
         else:
@@ -48,26 +54,31 @@ class BookRetrieveAPIView(RetrieveAPIView):
 
 
 class BookUpdateAPIView(UpdateAPIView):
+    """ Изменение книги """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsLibrarian,)
 
     def perform_update(self, serializer):
+        """ Создание slug отредактированной книги """
         book = serializer.save()
         book.slug = slugify(book.title + '-' + str(book.pk))
         book.save()
 
 
 class BookDeleteAPIView(DestroyAPIView):
+    """ Удаление книги """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsLibrarian,)
 
 
 class BookSearchView(APIView):
+    """ Поиск книг по названию, жанру или наличию на руках через Post запрос """
     permission_classes = (IsLibrarian,)
 
     def post(self, request):
+        """ Реализация поиска по названию, жанру или наличию на руках """
         query = str(request.data.get('query'))
         if query is None:
             return Response({'message': 'Заполните поле поиска'}, status=400)
@@ -81,9 +92,11 @@ class BookSearchView(APIView):
 
 
 class SearchBookByAuthorView(APIView):
+    """ Поиск книг по автору через Post запрос """
     permission_classes = (IsLibrarian,)
 
     def post(self, request):
+        """ Реализация поиска по автору """
         author_name = request.data.get('author_name')
         author_surname = request.data.get('author_surname')
         if author_name and author_surname:

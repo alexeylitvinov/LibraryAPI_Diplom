@@ -13,11 +13,13 @@ from users.services import generate_library_card_number
 
 
 class UserCreateAPIView(CreateAPIView):
+    """ Создание пользователя """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
     def perform_create(self, serializer):
+        """ Создание пользователя с кешированием пароля """
         user = serializer.save(is_active=True)
         user.library_card = generate_library_card_number(user.id)
         user.set_password(user.password)
@@ -25,26 +27,29 @@ class UserCreateAPIView(CreateAPIView):
 
 
 class UserListAPIView(ListAPIView):
+    """ Список пользователей """
     serializer_class = UserLibrarianViewSerializer
     permission_classes = (IsLibrarian,)
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('library_card', 'phone_number', 'first_name', 'last_name')
 
     def get_queryset(self):
+        """ Исключаем суперпользователя и группу "librarian" из списка """
         return User.objects.exclude(is_superuser=True).exclude(groups__name='librarian')
 
 
 class UserRetrieveAPIView(RetrieveAPIView):
+    """ Просмотр пользователя """
     queryset = User.objects.all()
 
-    # serializer_class = UserViewSerializer
-
     def get_serializer_class(self):
+        """ Определяем какой сериализатор использовать для данного запроса """
         if self.request.user.groups.filter(name='librarian').exists():
             return UserLibrarianViewSerializer
         return UserViewSerializer
 
     def get_object(self):
+        """ Получаем пользователя и проверяем права доступа """
         user = self.request.user
         pk = self.kwargs['pk']
         if user.groups.filter(name='librarian').exists():
@@ -55,10 +60,12 @@ class UserRetrieveAPIView(RetrieveAPIView):
 
 
 class UserUpdateAPIView(UpdateAPIView):
+    """ Обновление пользователя """
     queryset = User.objects.all()
     serializer_class = UserUpdateSerializer
 
     def get_object(self):
+        """ Получаем пользователя и проверяем права доступа """
         user = self.request.user
         pk = self.kwargs['pk']
         if pk != user.pk:
@@ -67,10 +74,12 @@ class UserUpdateAPIView(UpdateAPIView):
 
 
 class UserPasswordUpdateAPIView(UpdateAPIView):
+    """ Класс обновления пароля пользователя """
     queryset = User.objects.all()
     serializer_class = UserPasswordUpdateSerializer
 
     def get_object(self):
+        """ Получаем пользователя и проверяем права доступа """
         user = self.request.user
         pk = self.kwargs['pk']
         if pk != user.pk:
@@ -78,6 +87,7 @@ class UserPasswordUpdateAPIView(UpdateAPIView):
         return get_object_or_404(User, pk=pk)
 
     def partial_update(self, request, *args, **kwargs):
+        """ Обновление пароля пользователя """
         user = self.get_object()
         if 'password' in request.data:
             password = request.data.get('password')

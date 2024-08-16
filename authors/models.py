@@ -4,6 +4,7 @@ from users.models import NULLABLE
 
 
 class Author(models.Model):
+    """ Модель автора """
     name = models.CharField(max_length=255, verbose_name='Имя')
     surname = models.CharField(max_length=255, verbose_name='Фамилия')
     text = models.TextField(**NULLABLE, verbose_name='О авторе')

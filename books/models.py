@@ -5,6 +5,7 @@ from users.models import NULLABLE
 
 
 class Book(models.Model):
+    """ Модель книги """
     title = models.CharField(max_length=255, verbose_name='Название')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')
     text = models.TextField(**NULLABLE, verbose_name='О книге')

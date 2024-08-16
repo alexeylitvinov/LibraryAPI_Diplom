@@ -6,12 +6,14 @@ from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """ Serializer для создания пользователя. """
     class Meta:
         model = User
         fields = '__all__'
 
 
 class UserViewSerializer(serializers.ModelSerializer):
+    """ Serializer для просмотра пользователя. """
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'document', 'library_card', 'phone_number']
@@ -21,6 +23,7 @@ from lendings.serializers import LendingUserSerializer
 
 
 class UserLibrarianViewSerializer(serializers.ModelSerializer):
+    """ Serializer для просмотра пользователя (как библиотекарь). """
     lendings = serializers.SerializerMethodField()
 
     def get_lendings(self, obj):
@@ -34,12 +37,14 @@ class UserLibrarianViewSerializer(serializers.ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
+    """ Serializer для обновления пользователя. """
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'phone_number']
 
 
 class UserPasswordUpdateSerializer(serializers.ModelSerializer):
+    """ Serializer для обновления пароля пользователя. """
     class Meta:
         model = User
         fields = ['password']

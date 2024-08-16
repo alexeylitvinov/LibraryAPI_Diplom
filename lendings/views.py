@@ -14,11 +14,13 @@ from users.permissions import IsLibrarian
 
 
 class LendingCreateAPIView(CreateAPIView):
+    """ Создание выдачи """
     queryset = Lending.objects.all()
     serializer_class = LendingSerializer
     permission_classes = (IsLibrarian,)
 
     def perform_create(self, serializer):
+        """ Создание выдачи с проверкой наличия книг """
         with transaction.atomic():
             lending = serializer.save()
             lending.return_date = lending.lending_date + timedelta(days=DAYS)
@@ -33,6 +35,7 @@ class LendingCreateAPIView(CreateAPIView):
 
 
 class LendingListAPIView(ListAPIView):
+    """ Список выдач c фильтрацией """
     queryset = Lending.objects.all()
     serializer_class = LendingSerializer
     permission_classes = (IsLibrarian,)
@@ -41,17 +44,20 @@ class LendingListAPIView(ListAPIView):
 
 
 class LendingRetrieveAPIView(RetrieveAPIView):
+    """ Просмотр выдачи """
     queryset = Lending.objects.all()
     serializer_class = LendingSerializer
     permission_classes = (IsLibrarian,)
 
 
 class LendingActionAPIView(APIView):
+    """ Возврат книги """
     queryset = Lending.objects.all()
     serializer_class = LendingSerializer
     permission_classes = (IsLibrarian,)
 
     def post(self, request, pk):
+        """ Метод возврата книги """
         lending = Lending.objects.get(pk=pk)
         lending.active = False
         lending.save()

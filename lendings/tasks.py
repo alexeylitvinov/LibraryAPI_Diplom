@@ -10,6 +10,7 @@ from lendings.models import Lending
 
 @shared_task
 def send_email_task():
+    """ Задача для отправки письма по электронной почте """
     today = timezone.now().today().date()
     send_date = today + datetime.timedelta(days=1)
     lendings = Lending.objects.filter(return_date__date=send_date, active=True)

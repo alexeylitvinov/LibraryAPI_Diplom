@@ -6,11 +6,10 @@ from users.models import User
 
 
 class Command(BaseCommand):
-    """
-    Команда для создания администратора
-    """
+    """ Команда для создания администратора """
 
     def handle(self, *args, **options):
+        """ Создание администратора """
         admin_user = User.objects.create(
             email=os.getenv('S_EMAIL'),
             is_superuser=True,
