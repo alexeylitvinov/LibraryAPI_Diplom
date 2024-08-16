@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from lendings.models import Lending
-from lendings.serializers import LendingUserSerializer
+
 from users.models import User
 
 
@@ -17,6 +17,9 @@ class UserViewSerializer(serializers.ModelSerializer):
         fields = ['email', 'first_name', 'last_name', 'document', 'library_card', 'phone_number']
 
 
+from lendings.serializers import LendingUserSerializer
+
+
 class UserLibrarianViewSerializer(serializers.ModelSerializer):
     lendings = serializers.SerializerMethodField()
 
@@ -27,7 +30,7 @@ class UserLibrarianViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'library_card', 'phone_number', 'lendings']
+        fields = ['id', 'first_name', 'last_name', 'library_card', 'phone_number', 'lendings']
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):

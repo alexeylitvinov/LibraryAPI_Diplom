@@ -27,12 +27,24 @@ class BookListAPIView(ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['slug', 'author', 'year', 'on_hand']
+    filterset_fields = ['slug', 'title', 'genre', 'author', 'year', 'on_hand']
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='librarian').exists():
+            return Book.objects.all()
+        else:
+            return Book.objects.filter(on_hand=False)
 
 
 class BookRetrieveAPIView(RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='librarian').exists():
+            return Book.objects.all()
+        else:
+            return Book.objects.filter(on_hand=False)
 
 
 class BookUpdateAPIView(UpdateAPIView):
@@ -53,6 +65,8 @@ class BookDeleteAPIView(DestroyAPIView):
 
 
 class BookSearchView(APIView):
+    permission_classes = (IsLibrarian,)
+
     def post(self, request):
         query = str(request.data.get('query'))
         if query is None:
@@ -60,13 +74,15 @@ class BookSearchView(APIView):
         parts = query.split()
         q = Q()
         for i in parts:
-            q |= Q(title__icontains=i) | Q(year__icontains=i) | Q(on_hand__icontains=i)
+            q |= Q(title__icontains=i) | Q(genre__icontains=i) | Q(on_hand__icontains=i)
             books = Book.objects.filter(q)
-            serializer = BookSerializer(books, many=True)
+            serializer = BookListSerializer(books, many=True, context={'request': request})
         return Response(serializer.data)
 
 
 class SearchBookByAuthorView(APIView):
+    permission_classes = (IsLibrarian,)
+
     def post(self, request):
         author_name = request.data.get('author_name')
         author_surname = request.data.get('author_surname')
@@ -96,5 +112,5 @@ class SearchBookByAuthorView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         books = Book.objects.filter(author=author)
-        serializer = BookListSerializer(books, many=True)
+        serializer = BookListSerializer(books, many=True, context={'request': request})
         return Response(serializer.data)

@@ -30,23 +30,26 @@ class UserListAPIView(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('library_card', 'phone_number', 'first_name', 'last_name')
 
-    def get_serializer_class(self):
-        if self.request.user.groups.filter(name='librarian').exists():
-            return UserLibrarianViewSerializer
-        return UserSerializer
-
     def get_queryset(self):
         return User.objects.exclude(is_superuser=True).exclude(groups__name='librarian')
 
 
 class UserRetrieveAPIView(RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserViewSerializer
+
+    # serializer_class = UserViewSerializer
+
+    def get_serializer_class(self):
+        if self.request.user.groups.filter(name='librarian').exists():
+            return UserLibrarianViewSerializer
+        return UserViewSerializer
 
     def get_object(self):
         user = self.request.user
         pk = self.kwargs['pk']
-        if pk != user.pk:
+        if user.groups.filter(name='librarian').exists():
+            return get_object_or_404(User, pk=pk)
+        elif pk != user.pk:
             raise PermissionDenied('Недостаточно прав для данного действия')
         return get_object_or_404(User, pk=pk)
 

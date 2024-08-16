@@ -18,4 +18,4 @@ class Lending(models.Model):
         verbose_name_plural = 'Выдачи'
 
     def __str__(self):
-        return f'{self.user} - {self.book} - {self.lending_date}'
+        return f'{self.user} - {self.active} - {self.lending_date}'

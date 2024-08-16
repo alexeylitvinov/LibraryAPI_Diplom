@@ -4,6 +4,7 @@ from authors.serializers import AuthorBookSerializer
 from books.models import Book
 from lendings.models import Lending
 from lendings.serializers import LendingBookSerializer
+from users.models import User
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -14,7 +15,13 @@ class BookSerializer(serializers.ModelSerializer):
 
 class BookListSerializer(serializers.ModelSerializer):
     author_detail = AuthorBookSerializer(source='author')
-    lendings = serializers.SerializerMethodField()
+
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context.get('request')
+        if request and request.user.groups.filter(name='librarian').exists():
+            fields['lendings'] = serializers.SerializerMethodField()
+        return fields
 
     def get_lendings(self, obj):
         lendings = Lending.objects.filter(book=obj, active=True)
