@@ -15,14 +15,17 @@ class BookSerializer(serializers.ModelSerializer):
 
 class BookListSerializer(serializers.ModelSerializer):
     """ Serializer для книги с подробным описанием автора """
-    author_detail = AuthorBookSerializer(source='author')
+    author_detail = AuthorSerializer(source='author')
 
     def get_fields(self):
-        """ Если пользователь - библиотекарь, то добавляем поле "lendings" """
+        """ Если пользователь - библиотекарь, то добавляем поле "lendings", если пользователь -
+        то удаляем поле "on_hand" """
         fields = super().get_fields()
         request = self.context.get('request')
         if request and request.user.groups.filter(name='librarian').exists():
             fields['lendings'] = serializers.SerializerMethodField()
+        else:
+            fields.pop('on_hand')
         return fields
 
     def get_lendings(self, obj):

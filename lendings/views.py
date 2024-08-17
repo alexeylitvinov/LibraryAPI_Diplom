@@ -7,6 +7,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from books.paginations import CustomPagination
 from config.settings import DAYS
 from lendings.models import Lending
 from lendings.serializers import LendingSerializer
@@ -38,6 +39,7 @@ class LendingListAPIView(ListAPIView):
     """ Список выдач c фильтрацией """
     queryset = Lending.objects.all()
     serializer_class = LendingSerializer
+    pagination_class = CustomPagination
     permission_classes = (IsLibrarian,)
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['active', 'user']

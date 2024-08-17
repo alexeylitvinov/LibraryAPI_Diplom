@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from authors.models import Author
 from authors.serializers import AuthorSerializer
+from books.paginations import CustomPagination
 from users.permissions import IsLibrarian
 
 
@@ -27,6 +28,7 @@ class AuthorListAPIView(ListAPIView):
     """ Список авторов c фильтром по slug """
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('slug',)
 

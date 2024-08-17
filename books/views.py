@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from authors.models import Author
 from books.models import Book
+from books.paginations import CustomPagination
 from books.serializers import BookSerializer, BookListSerializer
 from users.permissions import IsLibrarian
 
@@ -29,6 +30,7 @@ class BookListAPIView(ListAPIView):
     """ Просмотр книг с фильтрацией """
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
+    pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['slug', 'title', 'genre', 'author', 'year', 'on_hand']
 

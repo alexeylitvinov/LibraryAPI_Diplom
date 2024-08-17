@@ -5,6 +5,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from books.paginations import CustomPagination
 from users.models import User
 from users.permissions import IsLibrarian
 from users.serializers import UserSerializer, UserViewSerializer, UserLibrarianViewSerializer, UserUpdateSerializer, \
@@ -30,6 +31,7 @@ class UserListAPIView(ListAPIView):
     """ Список пользователей """
     serializer_class = UserLibrarianViewSerializer
     permission_classes = (IsLibrarian,)
+    pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('library_card', 'phone_number', 'first_name', 'last_name')
 
